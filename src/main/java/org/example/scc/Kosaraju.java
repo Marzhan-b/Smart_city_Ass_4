@@ -1,4 +1,4 @@
 package org.example.scc;
 
-public class TarjanSCC {
+public class Kosaraju {
 }
