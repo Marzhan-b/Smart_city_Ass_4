@@ -4,8 +4,11 @@ import graph.scc.CondensationGraph;
 import graph.util.GraphLoader;
 import java.util.List;
 import graph.topo.TopologicalSort;
+import graph.dagsp.DAGLongestPath;
+import graph.dagsp.DAGShortestPath;
+import java.util.*;
 /**
- * Main class for Assignment 4: Smart City / Smart Campus Scheduling.
+ * Main class for Assignment 4: Smart City
  *
  * Executes the following steps:
  *  1. Load a directed dependency graph from JSON (tasks.json format).
@@ -53,6 +56,32 @@ public class Main {
         for (int compIndex : topoOrder) {
             System.out.println("SCC " + compIndex + " → " + result.components.get(compIndex));
         }
+        // DAG Shortest and Longest Paths ===
+        int sourceComp = result.component[ds.source];
+        System.out.println("\nSource component in DAG: " + sourceComp);
+
+        // --- Shortest Paths ---
+        long t1 = System.nanoTime();
+        var sp = DAGShortestPath.run(condensation, topoOrder, sourceComp);
+        long t2 = System.nanoTime();
+        System.out.printf("Shortest paths computed in %.3f ms%n", (t2 - t1) / 1_000_000.0);
+
+        System.out.println("Shortest distances from source:");
+        System.out.println(Arrays.toString(sp.dist));
+
+        // reconstruct path to last SCC in topo order
+        int targetComp = topoOrder.get(topoOrder.size() - 1);
+        System.out.println("Shortest path to SCC " + targetComp + ": " + sp.reconstruct(targetComp));
+
+        // --- Longest Path (Critical Path) ---
+        long t3 = System.nanoTime();
+        var lp = DAGLongestPath.run(condensation, topoOrder, sourceComp);
+        long t4 = System.nanoTime();
+        System.out.printf("\nLongest path computed in %.3f ms%n", (t4 - t3) / 1_000_000.0);
+
+        System.out.println("Critical path (SCC indices): " + lp.criticalPath());
+        System.out.println("Critical path length: " + lp.length());
+
 
     }
 

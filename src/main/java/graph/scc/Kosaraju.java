@@ -72,7 +72,6 @@ public class Kosaraju {
         }
         stack.push(v); // finished exploring v
     }
-
     // DFS used in Step 3 (collects vertices of one component)
     private static void dfs2(Graph g, int v, boolean[] visited, List<Integer> current) {
         visited[v] = true;
