@@ -13,7 +13,7 @@ public class Kosaraju {
             this.components = comps;
         }
     }
-    /// Main method to run this algorithm
+    // Main method to run this algorithm
     public static Result run(Graph g) {
         int n = g.getN();
         boolean[] visited = new boolean[n];
