@@ -1,12 +1,28 @@
-package org.example;
-import org.example.scc.Kosaraju;
-import org.example.scc.CondensationGraph;
-import org.example.util.GraphLoader;
+package graph;
+import graph.scc.Kosaraju;
+import graph.scc.CondensationGraph;
+import graph.util.GraphLoader;
 import java.util.List;
-import org.example.topo.TopologicalSort;
-
+import graph.topo.TopologicalSort;
+/**
+ * Main class for Assignment 4: Smart City / Smart Campus Scheduling.
+ *
+ * Executes the following steps:
+ *  1. Load a directed dependency graph from JSON (tasks.json format).
+ *  2. Run Kosaraju's algorithm to detect Strongly Connected Components (SCCs).
+ *  3. Build the condensation DAG (each SCC becomes a single node).
+ *  4. Perform topological sorting on the DAG.
+ *  5. Output the SCCs, their sizes, the condensation graph, and topological order.
+ *
+ * Note: The same main pipeline can later be extended for shortest and longest paths (Task 1.3).
+ */
 public class Main {
+    /**
+     * Entry point of the program.
+     * Loads one dataset, runs SCC + Condensation + Topological Sort, and prints the results.
+     */
     public static void main(String[] args) {
+        // === Step 1: Load dataset ===
         var ds = GraphLoader.loadFromResource("large_1.json");
         System.out.println("File: " + ds.name);
         System.out.println("Vertices: " + ds.graph.getN());

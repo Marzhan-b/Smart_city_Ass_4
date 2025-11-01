@@ -1,9 +1,18 @@
-package org.example.scc;
-import org.example.model.Edge;
-import org.example.model.Graph;
+package graph.scc;
+import graph.model.Edge;
+import graph.model.Graph;
 import java.util.*;
-
+/**
+ * Implements Kosaraju's algorithm to find Strongly Connected Components (SCC)
+ * in a directed graph.
+ *
+ * Algorithm:
+ *  1. Run first DFS to compute finish order.
+ *  2. Transpose the graph (reverse all edges).
+ *  3. Run DFS again on transposed graph to collect SCCs.
+ */
 public class Kosaraju {
+    /** Result object that stores all SCCs and vertex-to-component mapping. */
     public static class Result {
         public final int[] component;                 // component index for each vertex
         public final List<List<Integer>> components;  // list of components (each as a list of vertices)
@@ -53,6 +62,7 @@ public class Kosaraju {
         }
         return new Result(component, components);
     }
+    /** DFS used in Step 1 (fill stack by finish time). */
     private static void dfs1(Graph g, int v, boolean[] visited, Deque<Integer> stack) {
         visited[v] = true;
         for (Edge e : g.getAdj().get(v)) {
@@ -63,7 +73,7 @@ public class Kosaraju {
         stack.push(v); // finished exploring v
     }
 
-    /// DFS used in Step 3 (collects vertices of one component)
+    // DFS used in Step 3 (collects vertices of one component)
     private static void dfs2(Graph g, int v, boolean[] visited, List<Integer> current) {
         visited[v] = true;
         current.add(v);

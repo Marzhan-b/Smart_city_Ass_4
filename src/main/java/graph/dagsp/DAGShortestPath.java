@@ -1,4 +1,4 @@
-package org.example.dagsp;
+package graph.dagsp;
 
 public class DAGShortestPath {
 }

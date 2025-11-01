@@ -1,4 +1,4 @@
-package org.example.util;
+package graph.util;
 
 public interface Metrics {
     void incrementOperations();

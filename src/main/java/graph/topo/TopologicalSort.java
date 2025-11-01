@@ -1,9 +1,19 @@
-package org.example.topo;
-import org.example.model.Edge;
-import org.example.model.Graph;
+package graph.topo;
+import graph.model.Edge;
+import graph.model.Graph;
 import java.util.*;
-
+/**
+ * Performs Topological Sort on a Directed Acyclic Graph (DAG)
+ * using DFS-based approach.
+ *
+ * Steps:
+ *  1. Visit each unvisited vertex.
+ *  2. Explore all outgoing edges recursively.
+ *  3. Push the vertex into stack after exploration.
+ *  4. Reverse stack to obtain valid topological order.
+ */
 public class TopologicalSort {
+
     //  Runs topological sort on a DAG and returns the order of vertices.
     public static List<Integer> sort (Graph g) {
         int n= g.getN();
