@@ -27,17 +27,19 @@ public class PerformanceAnalyzer {
         );
         Path outputPath = Path.of("results.csv");
         try (var writer = Files.newBufferedWriter(outputPath);
-             var csv = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(
-                     "dataset_name", "scc_duration_ns", "dfs_calls", "edges_processed",
-                     "topo_duration_ns", "stack_pushes", "stack_pops",
-                     "shortest_path_ns", "edge_relaxations"))) {
-
+             var csv = new CSVPrinter(writer,
+                     CSVFormat.DEFAULT.builder()
+                             .setHeader(
+                                     "dataset_name", "scc_duration_ns", "dfs_calls", "edges_processed",
+                                     "topo_duration_ns", "stack_pushes", "stack_pops",
+                                     "shortest_path_ns", "edge_relaxations"
+                             ).build()
+             )) {
             Metrics metrics = new Metrics();
             for (String fileName : datasets) {
-                System.out.println("⚙  Processing: " + fileName);
+                System.out.println("⚙Processing: " + fileName);
                 var ds = GraphLoader.loadFromResource(fileName);
                 Graph g = ds.graph;
-
                 // === SCC (Kosaraju) ===
                 long sccStart = System.nanoTime();
                 var sccResult = Kosaraju.run(g);
@@ -57,46 +59,44 @@ public class PerformanceAnalyzer {
 
                 // === Shortest Path ===
                 long spStart = System.nanoTime();
-                var sp = DAGShortestPath.run(dag, topo, sccResult.component[ds.source]);
+                DAGShortestPath.run(dag, topo, sccResult.component[ds.source]);
                 long spEnd = System.nanoTime();
                 long spTime = spEnd - spStart;
                 metrics.add("edge_relaxations", dag.getEdgesCount());
 
-                // === Longest Path (critical path) ===
+                // === Longest Path ===
                 long lpStart = System.nanoTime();
                 DAGLongestPath.run(dag, topo, sccResult.component[ds.source]);
                 long lpEnd = System.nanoTime();
                 long lpTime = lpEnd - lpStart;
 
-                // === Write to CSV ===
+                // === Write to CSV (numbers only for analysis) ===
                 csv.printRecord(
                         fileName,
-                        sccTime,
+                        sccTime + " ns",
                         metrics.get("dfs_calls"),
                         metrics.get("edges_processed"),
-                        topoTime,
+                        topoTime + " ns",
                         metrics.get("stack_pushes"),
                         metrics.get("stack_pops"),
-                        spTime,
+                        spTime + " ns",
                         metrics.get("edge_relaxations")
                 );
-
+                // === Console output (formatted with ns units) ===
                 System.out.printf(
-                        " %-12s | SCC: %.3f ms | SP: %.3f ms | LP: %.3f ms%n",
-                        fileName, sccTime / 1_000_000.0, spTime / 1_000_000.0, lpTime / 1_000_000.0
+                        "%-12s | SCC: %d ns | SP: %d ns | LP: %d ns%n",
+                        fileName, sccTime, spTime, lpTime
                 );
 
                 metrics.reset();
             }
-
             System.out.println("\n Performance analysis complete!");
-            System.out.println("Results saved to " + outputPath.toAbsolutePath());
-
+            System.out.println(" Results saved to " + outputPath.toAbsolutePath());
         } catch (IOException e) {
             System.err.println(" Error writing CSV: " + e.getMessage());
         } catch (Exception e) {
             System.err.println(" Benchmark failed: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("(stack trace suppressed for cleaner output)");
         }
     }
 }
