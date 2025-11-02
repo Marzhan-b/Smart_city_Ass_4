@@ -13,7 +13,6 @@ import java.util.*;
  *  4. Reverse stack to obtain valid topological order.
  */
 public class TopologicalSort {
-
     //  Runs topological sort on a DAG and returns the order of vertices.
     public static List<Integer> sort (Graph g) {
         int n= g.getN();
@@ -25,10 +24,8 @@ public class TopologicalSort {
                 dfs(g,v,visited,stack);
             }
         }
-        // Step 2: Reverse stack to get final order
-        List<Integer> order= new ArrayList<>(stack);
-        Collections.reverse(order);
-        return order;
+        // Do NOT reverse — stack already gives correct topological order
+        return new ArrayList<>(stack);
     }
     //Helper DFS that fills stack based on finish time.
     private static void dfs(Graph graph, int v, boolean[] visited, Deque<Integer> stack) {

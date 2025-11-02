@@ -42,7 +42,7 @@ public class GraphLoader {
     public static DataSet loadFromResource(String resourceName) {
         try (InputStream in = GraphLoader.class.getResourceAsStream("/data/" + resourceName)) {
             if (in == null)
-                throw new IllegalArgumentException("File is not found " + resourceName);
+                throw new IllegalArgumentException("File not found: " + resourceName);
 
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(in);
@@ -50,18 +50,21 @@ public class GraphLoader {
             boolean directed = root.path("directed").asBoolean(true);
             int n = root.path("n").asInt();
             Graph g = new Graph(n, directed);
+
             // Step 1: Read all edges
             List<Edge> edges = mapper.convertValue(root.path("edges"), new TypeReference<List<Edge>>() {});
             for (Edge e : edges) {
                 g.addEdge(e.getU(), e.getV(), e.getW());
             }
+
             // Step 2: Extract source and weight model
             int source = root.path("source").asInt(0);
             String wm = root.path("weight_model").asText("edge");
 
             return new DataSet(g, source, wm, resourceName);
         } catch (Exception e) {
-            throw new RuntimeException("Mistakes when loaded from JSON: " + resourceName, e);
+            // Updated message so testLoadNonExistingFile() passes
+            throw new RuntimeException("File load error: " + resourceName, e);
         }
     }
 }

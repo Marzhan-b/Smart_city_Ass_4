@@ -31,9 +31,10 @@ public class PerformanceAnalyzer {
                      CSVFormat.DEFAULT.builder()
                              .setHeader(
                                      "dataset_name", "scc_duration_ns", "dfs_calls", "edges_processed",
-                                     "topo_duration_ns", "stack_pushes", "stack_pops",
+                                     "topo_duration_ns", "dfs_recursive_calls", "dfs_stack_adds",
                                      "shortest_path_ns", "edge_relaxations"
                              ).build()
+
              )) {
             Metrics metrics = new Metrics();
             for (String fileName : datasets) {
@@ -54,8 +55,9 @@ public class PerformanceAnalyzer {
                 var topo = TopologicalSort.sort(dag);
                 long topoEnd = System.nanoTime();
                 long topoTime = topoEnd - topoStart;
-                metrics.add("stack_pushes", dag.getN());
-                metrics.add("stack_pops", topo.size());
+                metrics.add("dfs_recursive_calls", dag.getN());
+                metrics.add("dfs_stack_adds", topo.size());
+
 
                 // === Shortest Path ===
                 long spStart = System.nanoTime();

@@ -1,10 +1,10 @@
-dataset_name,scc_duration_ns,dfs_calls,edges_processed,topo_duration_ns,stack_pushes,stack_pops,shortest_path_ns,edge_relaxations
-small_1.json,450800 ns,6,13,2304000 ns,2,2,838300 ns,1
-small_2.json,33900 ns,8,8,78500 ns,8,8,8500 ns,8
-small_3.json,20500 ns,10,28,39900 ns,5,5,6600 ns,5
-medium_1.json,52000 ns,12,27,52300 ns,6,6,2800 ns,9
-medium_2.json,29700 ns,15,18,48000 ns,15,15,6300 ns,18
-medium_3.json,43900 ns,18,33,42900 ns,6,6,3700 ns,3
-large_1.json,44300 ns,25,47,51900 ns,10,10,3000 ns,10
-large_2.json,43600 ns,35,32,77800 ns,35,35,3300 ns,32
-large_3.json,69200 ns,45,81,67700 ns,23,23,3400 ns,28
+dataset_name,scc_duration_ns,dfs_calls,edges_processed,topo_duration_ns,dfs_recursive_calls,dfs_stack_adds,shortest_path_ns,edge_relaxations
+small_1.json,380400 ns,6,13,2784400 ns,0,0,394600 ns,1
+small_2.json,23700 ns,8,8,42400 ns,0,0,3100 ns,8
+small_3.json,28400 ns,10,28,53200 ns,0,0,9600 ns,5
+medium_1.json,29400 ns,12,27,47600 ns,0,0,2700 ns,9
+medium_2.json,31800 ns,15,18,62600 ns,0,0,3400 ns,18
+medium_3.json,30000 ns,18,33,29000 ns,0,0,2800 ns,3
+large_1.json,38100 ns,25,47,54000 ns,0,0,3100 ns,10
+large_2.json,38800 ns,35,32,76100 ns,0,0,4800 ns,32
+large_3.json,85200 ns,45,81,96800 ns,0,0,5700 ns,28
