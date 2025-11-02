@@ -1,0 +1,10 @@
+dataset_name,scc_duration_ns,dfs_calls,edges_processed,topo_duration_ns,stack_pushes,stack_pops,shortest_path_ns,edge_relaxations
+small_1.json,710400,6,13,2889700,2,2,440901,1
+small_2.json,22500,8,8,53100,8,8,3600,8
+small_3.json,30400,10,28,45099,5,5,9400,5
+medium_1.json,21899,12,27,41199,6,6,2600,9
+medium_2.json,32400,15,18,62799,15,15,3800,18
+medium_3.json,27700,18,33,28101,6,6,2499,3
+large_1.json,51500,25,47,59400,10,10,3100,10
+large_2.json,56001,35,32,81500,35,35,4401,32
+large_3.json,53500,45,81,66499,23,23,3500,28
