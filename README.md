@@ -1,4 +1,6 @@
 
+---
+
 # **Smart City / Smart Campus Scheduling — Graph Analysis Report**
 
 ---
@@ -147,38 +149,84 @@ All algorithms demonstrated **linear scalability** and **no exponential behavior
 
 ### **Practical Recommendations**
 
-1. **Use Kosaraju’s SCC** in systems where mutual task dependencies may exist (e.g., infrastructure or maintenance planning).
-2. **Apply condensation and topological sorting** to derive an executable sequence of tasks without cyclic dependencies.
-3. **Use DAG Shortest Path** to minimize total time or resources.
-4. **Use DAG Longest Path** to identify the **critical path** — the most time-consuming dependency chain.
-5. **Choose between DFS-based or Kahn’s Topological Sort** based on scale:
+1. Use **Kosaraju’s SCC** in systems with potential cyclic dependencies (e.g., maintenance, logistics).
+2. Apply **Condensation + Topological Sort** to create safe, dependency-respecting execution sequences.
+3. Use **Shortest Path** to minimize cost or time; **Longest Path** for critical path identification.
+4. Choose **DFS** for smaller datasets and **Kahn’s algorithm** for larger DAGs.
+5. Beyond Smart City systems, these methods can support:
 
-    * DFS works well for small to medium graphs.
-    * Kahn’s algorithm suits larger, queue-based DAGs.
-6. **Possible applications beyond Smart City:**
-
-    * **University timetabling and project scheduling.**
-    * **Software build and dependency resolution systems.**
-    * **Manufacturing process optimization.**
-    * **Transportation and logistics planning.**
+   * University timetabling and project scheduling
+   * Software build/dependency management
+   * Manufacturing workflows
+   * Transportation route optimization
 
 ---
 
 ## **9. Reflection**
 
-This project demonstrated how **theoretical graph algorithms can solve real-world scheduling problems**.
-By detecting SCCs, converting to a DAG, and applying dynamic programming,
-I developed a full optimization workflow — from **cycle detection** to **critical path analysis**.
-This approach can be reused in various scheduling, dependency, and resource allocation systems.
+This project showed how **graph algorithms translate theory into practical scheduling tools**.
+By combining SCC detection, DAG construction, and dynamic programming,
+I created a complete optimization pipeline — from **cycle detection** to **critical path analysis**.
+This approach provides a reusable framework for scheduling, dependency resolution, and performance planning.
 
 ---
 
-## **10. Result**
+## **10. How to Build and Run**
 
-The project shows **algorithmic correctness, performance stability, and analytical depth**.
-All implemented algorithms achieved **O(V + E)** time complexity,
-passed all unit tests, and demonstrated scalability across datasets.
+### **Build the Project**
+
+```bash
+mvn clean install
+```
+
+Compiles all source files and prepares test classes.
+
+### **Run All Tests**
+
+```bash
+mvn test
+```
+
+JUnit tests are located in:
+
+```
+src/test/java/org/example/
+├── AlgorithmTests.java
+├── PathTests.java
+└── UtilityTests.java
+```
+
+Expected output:
+
+```
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
+BUILD SUCCESS
+```
+
+### **Run Specific Dataset**
+
+```bash
+mvn exec:java "-Dexec.args=src/main/resources/data/medium_2.json"
+```
+
+Example:
+
+* `small_1.json` → SCC detection
+* `medium_2.json` → Shortest Path test
+* `large_3.json` → Full workflow performance
 
 ---
 
-## **  By *Tulebayeva Marzhan, SE-2423*
+## **11. Result**
+
+This project demonstrates **algorithmic correctness, performance stability, and analytical depth**.
+All algorithms achieved **O(V + E)** complexity and passed all unit tests.
+The system successfully models real-world scheduling and dependency optimization for **Smart City** systems.
+
+---
+
+**By Tulebayeva Marzhan, SE-2423**
+
+---
+
+
